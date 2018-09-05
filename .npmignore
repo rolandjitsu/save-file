@@ -1,0 +1,14 @@
+coverage
+node_modules
+out-tsc
+scripts
+test
+.editorconfig
+.travis.yml
+jest.config.js
+rollup.config.js
+tsconfig.es5.json
+tsconfig.json
+tsconfig.spec.json
+tslint.json
+yarn.lock
