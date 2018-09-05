@@ -1,6 +1,6 @@
 {
     "name": "save-file",
-    "version": "0.3.0",
+    "version": "0.1.0",
     "description": "A simple fn to save a file to disk",
     "main": "./dist/index.js",
     "module": "./dist/es5/index.js",
