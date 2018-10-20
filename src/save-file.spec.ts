@@ -53,6 +53,23 @@ it('should revoke the created object url for the Blob after some time', () => {
     expect(revokeObjectURLSpy).toHaveBeenCalled();
 });
 
+it('should revoke the created object url for the Blob after the time set by the user', () => {
+    const a = document.createElement('a');
+    jest.spyOn(a, 'dispatchEvent');
+    jest.spyOn(document, 'createElement').mockReturnValue(a);
+
+    const objectUrl = 'test';
+    jest.spyOn(URL, 'createObjectURL').mockReturnValue(objectUrl);
+    const revokeObjectURLSpy = jest.spyOn(URL, 'revokeObjectURL');
+
+    const data = new Blob(['{}'], {type: 'application/json'});
+
+    saveFile(data, 'test.json', 10);
+
+    jest.advanceTimersByTime(10);
+    expect(revokeObjectURLSpy).toHaveBeenCalled();
+});
+
 it('should work with object urls', () => {
     const a = document.createElement('a');
     jest.spyOn(a, 'dispatchEvent');

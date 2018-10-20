@@ -1,16 +1,17 @@
-const CLEANUP_TIMEOUT = 1000 * 60; // 1 min
+const GC_TIMEOUT = 1000 * 60; // 1 min
 
 
 /**
  * Save a file from Blob or object url
- * We achieve this using the HTML5 download attr of <a>.
+ * We achieve this by using the HTML5 download attr of <a>.
  * Check https://developer.mozilla.org/en-US/docs/Web/HTML/Element/a#Browser_compatibility
- * for browser compatibility
+ * for browser compatibility.
  *
  * @param data
  * @param filename
+ * @param gcTimeout - When to remove the data uri
  */
-export default function saveFile(data: File | Blob | string, filename: string) {
+export default function saveFile(data: File | Blob | string, filename: string, gcTimeout: number = GC_TIMEOUT) {
     const isBlob = data instanceof Blob;
     const url = isBlob ? URL.createObjectURL(data) : data as string;
 
@@ -29,6 +30,6 @@ export default function saveFile(data: File | Blob | string, filename: string) {
     if (isBlob) {
         setTimeout(() => {
             URL.revokeObjectURL(url);
-        }, CLEANUP_TIMEOUT);
+        }, gcTimeout);
     }
 }

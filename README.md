@@ -50,6 +50,17 @@ const file = new File([json], {type: 'application/json'});
 saveFile(file, 'test.json');
 ```
 
+**NOTE**: We create a temporary data uri for File/Blob objects which we revoke after 1 minute.
+If you need to download a large file which may take longer than 1 minute to download,
+use the 3rd argument to increase this timeout:
+
+```ts
+import saveFile from 'save-as-file';
+const json = JSON.stringify({ping: true});
+const file = new File([json], {type: 'application/json'});
+saveFile(file, 'test.json', 1000 * 60 * 10 /* 10 mins */);
+```
+
 #### CommonJS
 Save a File to disk:
 ```ts
