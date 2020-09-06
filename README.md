@@ -2,7 +2,9 @@
 
 > A simple fn to save a file to disk.
 
-[![Travis (.org) branch](https://img.shields.io/travis/rolandjitsu/save-file/master.svg?style=flat-square)](https://github.com/rolandjitsu/save-file)
+[![npm](https://img.shields.io/npm/v/save-file.svg?style=flat-square)](https://www.npmjs.com/package/save-file)
+[![GitHub Workflow Status](https://img.shields.io/github/workflow/status/rolandjitsu/save-file/Test?label=tests&style=flat-square)](https://github.com/rolandjitsu/save-file/actions?query=workflow%3ATest)
+[![Coveralls github branch](https://img.shields.io/coveralls/github/rolandjitsu/save-file/master?style=flat-square)](https://coveralls.io/github/rolandjitsu/save-file?branch=master)
 
 
 # Table of Contents
