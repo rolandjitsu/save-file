@@ -25,7 +25,8 @@ export default function saveFile(
   a.download = filename;
   const click = new MouseEvent('click');
 
-  // Dispatch on the next frame so the element is attached before the click.
+  // Defer the click to the next frame so the download fires after the current
+  // call stack unwinds, not synchronously during setup.
   requestAnimationFrame(() => {
     a.dispatchEvent(click);
   });
