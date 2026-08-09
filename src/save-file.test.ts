@@ -69,6 +69,30 @@ describe('saveFile', () => {
     expect(revokeObjectURLSpy).toHaveBeenCalled();
   });
 
+  it('defaults the filename to the File name when omitted', () => {
+    const a = document.createElement('a');
+    vi.spyOn(a, 'dispatchEvent');
+    vi.spyOn(document, 'createElement').mockReturnValue(a);
+    vi.spyOn(URL, 'createObjectURL').mockReturnValue('test');
+
+    const data = new File(['{}'], 'from-file.json', {type: 'application/json'});
+    saveFile(data);
+
+    expect(a.download).toEqual('from-file.json');
+  });
+
+  it('falls back to an empty download name for a Blob with no filename', () => {
+    const a = document.createElement('a');
+    vi.spyOn(a, 'dispatchEvent');
+    vi.spyOn(document, 'createElement').mockReturnValue(a);
+    vi.spyOn(URL, 'createObjectURL').mockReturnValue('test');
+
+    const data = new Blob(['{}'], {type: 'application/json'});
+    saveFile(data);
+
+    expect(a.download).toEqual('');
+  });
+
   it('works with an existing object URL and does not create a new one', () => {
     const a = document.createElement('a');
     vi.spyOn(a, 'dispatchEvent');
