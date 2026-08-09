@@ -9,6 +9,10 @@ on:
 permissions:
   contents: read
 
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     name: Build and test
@@ -18,6 +22,8 @@ jobs:
         node-version: [22, 24]
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v7
         with:
@@ -33,6 +39,10 @@ jobs:
         run: npm run typecheck
       - name: Build
         run: npm run build
+      - name: Smoke test build artifacts
+        run: |
+          node -e "const s = require('./dist/index.js'); if (typeof s !== 'function') throw new Error('CJS default export is not a function');"
+          node --input-type=module -e "import s from './dist/index.mjs'; if (typeof s !== 'function') throw new Error('ESM default export is not a function');"
       - name: Test
         run: npm run test:cov
       - name: Upload coverage to Coveralls
