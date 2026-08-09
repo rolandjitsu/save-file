@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["import", "typescript"],
+  "env": {
+    "browser": true,
+    "es2024": true
+  },
+  "categories": {
+    "correctness": "error"
+  },
+  "ignorePatterns": ["dist", "coverage"],
+  "overrides": [
+    {
+      "files": ["**/*.test.ts", "vitest.setup.js"],
+      "plugins": ["vitest"],
+      "env": {
+        "node": true
+      }
+    }
+  ]
+}
