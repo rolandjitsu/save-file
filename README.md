@@ -1,4 +1,4 @@
-# File Saver
+# save-as-file
 
 > A simple fn to save a file to disk.
 
@@ -10,6 +10,7 @@
 
 - [Installation](#installation)
 - [Usage](#usage)
+- [API](#api)
 - [Browser Support](#browser-support)
 - [Contribute](#contribute)
 
@@ -62,6 +63,13 @@ const file = new File([json], 'test.json', {type: 'application/json'});
 saveFile(file, 'test.json');
 ```
 
+Since a `File` already carries a name, `filename` is optional for File input and
+defaults to the File's own `name`:
+
+```ts
+saveFile(file); // saved as file.name
+```
+
 **NOTE**: For File/Blob objects we create a temporary object URL which we revoke after 1 minute.
 If you need to download a large file which may take longer than 1 minute to download,
 use the 3rd argument to increase this timeout:
@@ -83,6 +91,20 @@ const json = JSON.stringify({ping: true});
 const file = new File([json], 'test.json', {type: 'application/json'});
 saveFile(file, 'test.json');
 ```
+
+### API
+
+---
+
+```ts
+saveFile(data, filename?, gcTimeout?): void
+```
+
+| Param       | Type                     | Default     | Description                                                                               |
+| ----------- | ------------------------ | ----------- | ----------------------------------------------------------------------------------------- |
+| `data`      | `File \| Blob \| string` | -           | The File/Blob to save, or an existing object URL string.                                  |
+| `filename`  | `string`                 | `data.name` | Name to save the file as. Optional for File input; defaults to the File's own `name`.     |
+| `gcTimeout` | `number`                 | `60000`     | Milliseconds to wait before revoking a created object URL. Only used for File/Blob input. |
 
 ### Browser Support
 
