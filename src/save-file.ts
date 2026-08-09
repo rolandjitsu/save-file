@@ -7,14 +7,15 @@ const GC_TIMEOUT = 1000 * 60; // 1 min
  * for browser compatibility.
  *
  * @param data - A File/Blob to download, or an existing object URL string.
- * @param filename - The name to save the file as.
+ * @param filename - The name to save the file as. Optional when `data` is a
+ *   File; defaults to the File's own `name`.
  * @param gcTimeout - How long to wait, in ms, before revoking a created object
  *   URL. Only used when `data` is a Blob. Bump it for large downloads that may
  *   outlast the default.
  */
 export default function saveFile(
   data: File | Blob | string,
-  filename: string,
+  filename?: string,
   gcTimeout: number = GC_TIMEOUT
 ): void {
   const isBlob = data instanceof Blob;
@@ -22,7 +23,7 @@ export default function saveFile(
 
   const a = document.createElement('a');
   a.href = url;
-  a.download = filename;
+  a.download = filename ?? (data instanceof File ? data.name : '');
   const click = new MouseEvent('click');
 
   // Defer the click to the next frame so the download fires after the current
