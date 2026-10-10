@@ -6,6 +6,13 @@ updates:
       interval: weekly
     open-pull-requests-limit: 10
     groups:
+      # Keep vitest and its companion packages (e.g. @vitest/coverage-v8) on the
+      # same version by bumping them together in a single PR. Listed before patch
+      # so every vitest update type lands in this group rather than being split.
+      vitest:
+        patterns:
+          - vitest
+          - '@vitest/*'
       # Patch bumps are batched into one PR that the auto-merge workflow can land.
       patch:
         update-types:
